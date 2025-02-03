@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+
+{% block title %} {{title}} {% endblock title %}
+
+
+{% block content %}
+
+    <div style="color:#575757; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div> 
+    
+    <br>
+    
+    <form method="post">
+    
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <div class="row">
+            <div class="column">
+                <div class="form-group ">
+                    {{ form.category.errors }}
+                    <label for="{{ form.category.id_for_label }}">Category:</label>
+                    {{ form.category }}
+                </div>
+                <div class="form-group ">
+                    {{ form.name.errors }}
+                    <label for="{{ form.name.id_for_label }}">Description:</label>
+                    {{ form.name }}
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="form-group ">
+                    {{ form.part_number.errors }}
+                    <label for="{{ form.quantity.id_for_label }}">Part Number:</label>
+                    {{ form.part_number }}
+                </div>
+                <div class="form-group ">
+                    {{ form.quantity.errors }}
+                    <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+                    {{ form.quantity }}
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="form-group ">
+                    {{ form.bin_location.errors }}
+                    <label for="{{ form.bin_location.id_for_label }}">Bin Location:</label>
+                    {{ form.bin_location }}
+                </div>
+                <div class="form-group ">
+                    {{ form.reorder_level.errors }}
+                    <label for="{{ form.reorder_level.id_for_label }}">Reorder Level:</label>
+                    {{ form.reorder_level }}
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="form-group ">
+                    {{ form.part_number.errors }}
+                    <label for="{{ form.cost_per_item.id_for_label }}">Price:</label>
+                    {{ form.cost_per_item }}
+                </div>
+            </div>
+          </div> 
+            
+          <br>
+
+        <div class="align-middle">
+            <button type="submit" class="btn btn-outline-success">{{ savebtn }}</button>
+            {% if title == "New Stock" %}
+                <button type="reset" class="btn btn-outline-danger" ><i class="fa fa-refresh fa-spin" style="font-size:24px"></i> Reset</button>
+            {% endif %}
+            {% if delbtn %}
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'delete-stock' object.pk %}" class="btn  btn-outline-danger"><i class="fa fa-trash"></i> Del</a>
+            {% endif %}    
+            {% endif %}
+            <a href="{% url 'inventory' %}" class="btn btn-outline-secondary"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}
